@@ -1,0 +1,1 @@
+patch for Ntablet-870a , 
