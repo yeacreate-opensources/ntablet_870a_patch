@@ -1,12 +1,11 @@
 diff --git a/drivers/media/i2c/Kconfig b/drivers/media/i2c/Kconfig
-index 2a0d9512f44a..81a8e3b641aa 100644
+index 5a3cbdd0cddd..7085e0ac5be4 100644
 --- a/drivers/media/i2c/Kconfig
 +++ b/drivers/media/i2c/Kconfig
-@@ -548,6 +548,17 @@ config VIDEO_OV5647
- 
+@@ -589,6 +589,17 @@ config VIDEO_OV5647
  	  To compile this driver as a module, choose M here: the
  	  module will be called ov5647.
-+	  
+ 
 +config VIDEO_OV5648
 +	tristate "OmniVision OV5648 sensor support"
 +	depends on I2C && VIDEO_V4L2
@@ -16,22 +15,23 @@ index 2a0d9512f44a..81a8e3b641aa 100644
 +	  OV5695 camera.
 +
 +	  To compile this driver as a module, choose M here: the
-+	  module will be called ov5648.
- 
++	  module will be called ov5648.	  
++	  
  config VIDEO_OV5695
  	tristate "OmniVision OV5695 sensor support"
+ 	depends on I2C && VIDEO_V4L2
 diff --git a/drivers/media/i2c/Makefile b/drivers/media/i2c/Makefile
-index 377e7ab0e5d7..a820b78fed3e 100644
+index 8cd458c5d7a7..564f3185fd07 100644
 --- a/drivers/media/i2c/Makefile
 +++ b/drivers/media/i2c/Makefile
-@@ -86,6 +86,7 @@ obj-$(CONFIG_VIDEO_ML86V7667)	+= ml86v7667.o
+@@ -91,6 +91,7 @@ obj-$(CONFIG_VIDEO_ML86V7667)	+= ml86v7667.o
  obj-$(CONFIG_VIDEO_OV2659)	+= ov2659.o
  obj-$(CONFIG_VIDEO_TC35874X)	+= tc35874x.o
  obj-$(CONFIG_VIDEO_OV5647)	+= ov5647.o
-+obj-$(CONFIG_VIDEO_OV5648)      += ov5648.o
++obj-$(CONFIG_VIDEO_OV5648)	+= ov5648.o
  obj-$(CONFIG_VIDEO_IMX219)	+= imx219.o
+ obj-$(CONFIG_VIDEO_IMX323)	+= imx323.o
  obj-$(CONFIG_VIDEO_GC2155)	+= gc2155.o
- obj-$(CONFIG_VIDEO_GC0312)	+= gc0312.o
 diff --git a/drivers/media/i2c/ov5648.c b/drivers/media/i2c/ov5648.c
 new file mode 100644
 index 000000000000..98f407a142c8
