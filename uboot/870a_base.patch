@@ -1,0 +1,114 @@
+diff --git a/arch/arm/mach-rockchip/rk3288/Kconfig b/arch/arm/mach-rockchip/rk3288/Kconfig
+index bbab13f304..862dd1c1ca 100644
+--- a/arch/arm/mach-rockchip/rk3288/Kconfig
++++ b/arch/arm/mach-rockchip/rk3288/Kconfig
+@@ -76,6 +76,15 @@ config TARGET_MIQI_RK3288
+ 	  ports, HDMI, micro-SD card, 16 GB eMMC and Gigabit Ethernet. It
+ 	  has 1 or 2 GiB SDRAM. Expansion connectors provide access to
+ 	  I2C, SPI, UART, GPIOs and fan control.
++	  
++config TARGET_NTABLET_RK3288
++	bool "Ntablet-RK3288"
++	select BOARD_LATE_INIT
++	help
++	  Ntablet-RK3288 is a RK3288-based development board with 2 USB 2.0
++	  ports, HDMI, micro-SD card, 16 GB eMMC. 
++	  It has 1 or 2 GiB SDRAM. Expansion connectors provide access to
++	  I2C, SPI, UART, GPIOs.
+ 
+ config TARGET_PHYCORE_RK3288
+ 	bool "phyCORE-RK3288"
+@@ -183,6 +192,8 @@ source "board/google/veyron/Kconfig"
+ 
+ source "board/mqmaker/miqi_rk3288/Kconfig"
+ 
++source "board/ntablet/870a_rk3288/Kconfig"
++
+ source "board/phytec/phycore_rk3288/Kconfig"
+ 
+ source "board/radxa/rock2/Kconfig"
+diff --git a/board/ntablet/870a_rk3288/870a_rk3288.c b/board/ntablet/870a_rk3288/870a_rk3288.c
+new file mode 100644
+index 0000000000..846deddb80
+--- /dev/null
++++ b/board/ntablet/870a_rk3288/870a_rk3288.c
+@@ -0,0 +1,8 @@
++/*
++ * (C) Copyright 2016 Rockchip Electronics Co., Ltd
++ *
++ * SPDX-License-Identifier:     GPL-2.0+
++ */
++
++#include <common.h>
++#include <spl.h>
+diff --git a/board/ntablet/870a_rk3288/Kconfig b/board/ntablet/870a_rk3288/Kconfig
+new file mode 100644
+index 0000000000..a82246de57
+--- /dev/null
++++ b/board/ntablet/870a_rk3288/Kconfig
+@@ -0,0 +1,15 @@
++if TARGET_NTABLET_RK3288
++
++config SYS_BOARD
++	default "870a_rk3288"
++
++config SYS_VENDOR
++	default "ntablet"
++
++config SYS_CONFIG_NAME
++	default "870a_rk3288"
++
++config BOARD_SPECIFIC_OPTIONS # dummy
++	def_bool y
++
++endif
+diff --git a/board/ntablet/870a_rk3288/MAINTAINERS b/board/ntablet/870a_rk3288/MAINTAINERS
+new file mode 100644
+index 0000000000..742c9e982c
+--- /dev/null
++++ b/board/ntablet/870a_rk3288/MAINTAINERS
+@@ -0,0 +1,6 @@
++NTABLET
++M:	Simon Chen <simon@yeacreate.com>
++S:	Maintained
++F:	board/ntablet/870a_rk3288
++F:	include/configs/870a_rk3288.h
++F:	configs/rk3288-ntablet-870a_defconfig
+diff --git a/board/ntablet/870a_rk3288/Makefile b/board/ntablet/870a_rk3288/Makefile
+new file mode 100644
+index 0000000000..7fb24a2f81
+--- /dev/null
++++ b/board/ntablet/870a_rk3288/Makefile
+@@ -0,0 +1,7 @@
++#
++# (C) Copyright 2016 Rockchip Electronics Co., Ltd
++#
++# SPDX-License-Identifier:     GPL-2.0+
++#
++
++obj-y	+= 870a_rk3288.o
+diff --git a/include/configs/870a_rk3288.h b/include/configs/870a_rk3288.h
+new file mode 100644
+index 0000000000..0c43a2343d
+--- /dev/null
++++ b/include/configs/870a_rk3288.h
+@@ -0,0 +1,19 @@
++/*
++ * (C) Copyright 2016 Rockchip Electronics Co., Ltd
++ *
++ * SPDX-License-Identifier:     GPL-2.0+
++ */
++
++#ifndef __CONFIG_H
++#define __CONFIG_H
++
++#define ROCKCHIP_DEVICE_SETTINGS \
++		"stdin=serial,cros-ec-keyb\0" \
++		"stdout=serial,vidconsole\0" \
++		"stderr=serial,vidconsole\0"
++
++#include <configs/rk3288_common.h>
++
++#define CONFIG_SYS_MMC_ENV_DEV 0
++
++#endif
