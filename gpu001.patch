@@ -1,0 +1,35 @@
+diff --git a/drivers/gpu/arm/midgard/mali_base_kernel.h b/drivers/gpu/arm/midgard/mali_base_kernel.h
+index ea5e473caef6..d5c8cbc2aed3 100644
+--- a/drivers/gpu/arm/midgard/mali_base_kernel.h
++++ b/drivers/gpu/arm/midgard/mali_base_kernel.h
+@@ -64,7 +64,7 @@ typedef struct base_mem_handle {
+  * we decide to make the number of semaphores a configurable
+  * option.
+  */
+-#define BASE_JD_ATOM_COUNT              512
++#define BASE_JD_ATOM_COUNT              256
+ 
+ #define BASEP_JD_SEM_PER_WORD_LOG2      5
+ #define BASEP_JD_SEM_PER_WORD           (1 << BASEP_JD_SEM_PER_WORD_LOG2)
+@@ -831,7 +831,7 @@ enum kbase_jd_atom_state {
+ 	KBASE_JD_ATOM_STATE_COMPLETED
+ };
+ 
+-typedef u16 base_atom_id; /**< Type big enough to store an atom number in */
++typedef u8 base_atom_id; /**< Type big enough to store an atom number in */
+ 
+ struct base_dependency {
+ 	base_atom_id  atom_id;               /**< An atom number */
+diff --git a/drivers/gpu/arm/midgard/mali_kbase_jd.c b/drivers/gpu/arm/midgard/mali_kbase_jd.c
+index 68bfa3bedef8..a93e4c252d8b 100644
+--- a/drivers/gpu/arm/midgard/mali_kbase_jd.c
++++ b/drivers/gpu/arm/midgard/mali_kbase_jd.c
+@@ -1385,7 +1385,7 @@ int kbase_jd_submit(struct kbase_context *kctx,
+ #define compiletime_assert(x, msg) do { switch (0) { case 0: case (x):; } } \
+ while (false)
+ #endif
+-		compiletime_assert((1 << (8*sizeof(user_atom.atom_number))) >=
++		compiletime_assert((1 << (8*sizeof(user_atom.atom_number))) ==
+ 					BASE_JD_ATOM_COUNT,
+ 			"BASE_JD_ATOM_COUNT and base_atom_id type out of sync");
+ 		compiletime_assert(sizeof(user_atom.pre_dep[0].atom_id) ==
